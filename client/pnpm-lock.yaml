@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@emotion/react': ^11.10.6
+  '@iconify/react': ^4.1.0
   '@mantine/core': ^6.0.6
   '@mantine/hooks': ^6.0.6
   '@types/react': ^18.0.28
@@ -18,6 +19,7 @@ specifiers:
 
 dependencies:
   '@emotion/react': 11.10.6_pofolu2o2erjq4lhyzl3hqovzq
+  '@iconify/react': 4.1.0_react@18.2.0
   '@mantine/core': 6.0.6_z6mkljgfz35cqw5xrleq7kjcbq
   '@mantine/hooks': 6.0.6_react@18.2.0
   autoprefixer: 10.4.14_postcss@8.4.21
@@ -404,6 +406,19 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       tabbable: 6.1.1
+    dev: false
+
+  /@iconify/react/4.1.0_react@18.2.0:
+    resolution: {integrity: sha512-Mf72i3TNNKpKCKxmo7kzqyrUdCgaoljpqtWmtqpqwyxoV4ukhnDsSRNLhf2yBnqGr3cVZsdj/i0FMpXIY0Qk0g==}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      '@iconify/types': 2.0.0
+      react: 18.2.0
+    dev: false
+
+  /@iconify/types/2.0.0:
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
     dev: false
 
   /@mantine/core/6.0.6_z6mkljgfz35cqw5xrleq7kjcbq:
