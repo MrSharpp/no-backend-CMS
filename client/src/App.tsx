@@ -4,7 +4,7 @@ import Sidebar from './components/Sidebar';
 import Main from './components/Main';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Table from './pages/Table';
-import ViewBuilder from './pages/Builder';
+import ViewBuilder from './pages/Builder/Builder';
 
 function App() {
   return (
