@@ -1,6 +1,6 @@
 function Main({ children }: React.PropsWithChildren) {
   return (
-    <main>
+    <main className="w-5/6">
       {children}
     </main>
   );

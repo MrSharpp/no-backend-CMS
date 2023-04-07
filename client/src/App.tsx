@@ -9,14 +9,15 @@ function App() {
   return (
     <div className="flex">
       <Sidebar />
-      <BrowserRouter>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route index element={<Table />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-      <Main />
+      <Main>
+        <BrowserRouter>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route index element={<Table />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </Main>
     </div>
   );
 }
