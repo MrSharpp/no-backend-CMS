@@ -1,4 +1,4 @@
-import { Table, createStyles, Text, Button, ActionIcon } from '@mantine/core';
+import { Table, createStyles, Text, Button, ActionIcon, Flex } from '@mantine/core';
 import { Icon } from '@iconify/react';
 import AddColumn from './AddColumn';
 import { useState } from 'react';
@@ -22,7 +22,7 @@ function BuilderMain() {
         <SchemaModal schemaModal={schemaModal} setSchemaModal={setSchemaModal}  /> 
       <div className='flex justify-end'>
         <h5 className="flex-1 text-xl text-gray-600  font-bold dark:text-dark">
-            Columns
+            Define Table
         </h5>
         
         <div className='flex items-center gap-2'>
@@ -42,6 +42,10 @@ function BuilderMain() {
                 <Text className={classes.tableHeader}>API Endpoint</Text>
               </th>
 
+              <th>
+                <Text className={classes.tableHeader}>JSON Path</Text>
+              </th>
+
               <th className='w-40'>
                 <Text className={classes.tableHeader}>Actions</Text>
               </th>
@@ -51,7 +55,12 @@ function BuilderMain() {
             <tr>
               <td>Name</td>
               <td>https://www.google.com</td>
-              <td>Delete / Edit</td>
+              <td>$.name[0]</td>
+
+              <td><Flex>
+              <ActionIcon><Icon icon={'material-symbols:edit'} /></ActionIcon><ActionIcon color='red'><Icon height={15} icon={'material-symbols:delete-outline'} /></ActionIcon>
+              </Flex>
+              </td>
 
             </tr>
           </tbody>
