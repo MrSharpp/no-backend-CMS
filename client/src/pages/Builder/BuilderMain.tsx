@@ -1,7 +1,8 @@
 import { Table, createStyles, Text, Button, ActionIcon } from '@mantine/core';
 import { Icon } from '@iconify/react';
-import SchemaModal from './SchemaModal';
+import AddColumn from './AddColumn';
 import { useState } from 'react';
+import SchemaModal from './Schema';
 
 const useStyles = createStyles(() => ({
   tableHeader: {
@@ -9,21 +10,24 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-function BuilderEditor() {
+function BuilderMain() {
   const { classes } = useStyles();
-  const [settingsModal, setSettingsModal] = useState(false);
+  const [columnModal, setColumnModal] = useState(false);
+  const [schemaModal, setSchemaModal] = useState(false);
+
 
   return (
     <div className="flex  flex-col p-4 bg-white shadow w-full">
-        <SchemaModal settingsModal={settingsModal} setSettingsModal={setSettingsModal} />
+        <AddColumn settingsModal={columnModal} setSettingsModal={setColumnModal} jsonData={{hello: "world"}} />
+        <SchemaModal schemaModal={schemaModal} setSchemaModal={setSchemaModal}  /> 
       <div className='flex justify-end'>
         <h5 className="flex-1 text-xl text-gray-600  font-bold dark:text-dark">
             Columns
         </h5>
         
         <div className='flex items-center gap-2'>
-        <Button className='center rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20  hover:shadow-blue-500/40  '>Add Column</Button>
-        <ActionIcon size={'lg'} variant='light' onClick={() => setSettingsModal(true)}><Icon icon="ep:setting" /></ActionIcon>
+        <Button className='center rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20  hover:shadow-blue-500/40  ' onClick={() => setColumnModal(true)}>Add Column</Button>
+        <ActionIcon size={'lg'} variant='light' onClick={() => setSchemaModal(true)}><Icon icon="ep:setting" /></ActionIcon>
         </div>
       </div>
 
@@ -57,4 +61,4 @@ function BuilderEditor() {
   );
 }
 
-export default BuilderEditor;
+export default BuilderMain;

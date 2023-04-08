@@ -1,4 +1,4 @@
-function BuilderNavigator() {
+function BuilderSidebar() {
   return (
     <div className="flex flex-col p-4 bg-white shadow w-64">
       <div className="flow-root">
@@ -43,4 +43,4 @@ function BuilderNavigator() {
   );
 }
 
-export default BuilderNavigator;
+export default BuilderSidebar;

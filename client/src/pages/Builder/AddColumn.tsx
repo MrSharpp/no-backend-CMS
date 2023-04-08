@@ -1,13 +1,9 @@
 import {
   Box,
   Button,
-  Checkbox,
   Group,
   Modal,
-  Portal,
-  Select,
   Stack,
-  StyleProperty,
   TextInput,
   Text,
 } from '@mantine/core';
@@ -15,55 +11,39 @@ import { useForm } from '@mantine/form';
 import jp from 'jsonpath';
 import JSONPretty from 'react-json-pretty';
 
-import 'reactflow/dist/style.css';
 import 'react-json-pretty/themes/monikai.css';
 import { useEffect, useState } from 'react';
 
-function SchemaModal({
+function AddColumn({
   settingsModal,
   setSettingsModal,
+  jsonData,
 }: {
+  jsonData: object;
   settingsModal: boolean;
   setSettingsModal: (data: boolean) => void;
 }) {
   const [jpath, setjPath] = useState<string | string[]>('');
   const form = useForm({});
-  const dummyResponse = {
-    name: 'Amir Alam',
-    age: 17,
-    fans: [{ name: 'fan1' }, { name: 'fann2' }],
-  };
 
   useEffect(() => setjPath(''), [settingsModal]);
 
   const evaluatePath = (jpathString: string) => {
     let resp: string[] | string = '';
     try {
-      resp = jp.query(dummyResponse, jpathString);
+      resp = jp.query(jsonData, jpathString);
     } catch (err) {
       resp = 'Invalid Json Path';
     }
     setjPath(resp);
   };
 
-  // onInput={e => {
-  //   const value = e.target.value;
-  //   const dotIncluded = value?.includes(".")
-  //   if(!dotIncluded) return;
-  //   console.log(value.split('.').at(-1))
-
-  // }}
-
   return (
     <Modal
       opened={settingsModal}
       onClose={() => setSettingsModal(false)}
       title="Add Column"
-      styles={{
-        content: {
-          overflowY: 'visible !important',
-        },
-      }}
+      size={'lg'}
     >
       <Box mx={'sm'} mt={'sm'}>
         <form onSubmit={form.onSubmit(values => console.log(values))}>
@@ -74,10 +54,11 @@ function SchemaModal({
               {...form.getInputProps('columnName')}
             />
 
-            <JSONPretty id="json-pretty" data={dummyResponse} />
+            <JSONPretty id="json-pretty" data={jsonData} />
 
             <TextInput
               label="JSON Path"
+              defaultValue={'$'}
               description="use $ to access root and . to acces its children. eg: $.name"
               onChange={e => evaluatePath(e.target.value)}
             />
@@ -91,7 +72,7 @@ function SchemaModal({
                 type="submit"
                 className="center rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20  hover:shadow-blue-500/40 "
               >
-                Submit
+                Add
               </Button>
             </Group>
           </Stack>
@@ -101,4 +82,4 @@ function SchemaModal({
   );
 }
 
-export default SchemaModal;
+export default AddColumn;
