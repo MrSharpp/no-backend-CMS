@@ -1,6 +1,16 @@
 import { Icon } from '@iconify/react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useAppSelector } from '../store/storeHooks';
 
 function Sidebar() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const tables = useAppSelector(state => state.tables);
+
+  const highlight = (path: string) =>
+    `${location.pathname === path && 'bg-gray-100'}`;
+
   return (
     <aside className="flex flex-wrap h-screen flex-col justify-between border-r bg-white w-1/6">
       <div className="px-4 py-6">
@@ -9,18 +19,28 @@ function Sidebar() {
         </span>
 
         <nav aria-label="Main Nav" className="mt-6 flex flex-col space-y-1">
-          <a
-            href="/"
-            className="flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-gray-700"
-          >
-            <Icon icon={'material-symbols:table-chart'} />
+          {tables.map(table =>
+            <a
+              href="#"
+              onClick={() => navigate(`/${table.name.replaceAll(' ', '-')}`)}
+              className={`flex items-center gap-2 rounded-lg  px-4 py-2 text-gray-700 ${highlight(
+                '/'
+              )}`}
+            >
+              <Icon icon={'material-symbols:table-chart'} />
 
-            <span className="text-sm font-medium"> Mailing List </span>
-          </a>
+              <span className="text-sm font-medium">
+                {' '}{table.name}{' '}
+              </span>
+            </a>
+          )}
 
           <a
-            href="/view-builder"
-            className="flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 mt-auto"
+            href="#"
+            onClick={() => navigate('/view-builder')}
+            className={`flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 mt-auto ${highlight(
+              '/view-builder'
+            )}`}
           >
             <Icon icon={'uil:setting'} />
 
