@@ -1,6 +1,7 @@
 import { Table, createStyles, Text, Button, ActionIcon } from '@mantine/core';
 import { Icon } from '@iconify/react';
 import SchemaModal from './SchemaModal';
+import { useState } from 'react';
 
 const useStyles = createStyles(() => ({
   tableHeader: {
@@ -10,10 +11,11 @@ const useStyles = createStyles(() => ({
 
 function BuilderEditor() {
   const { classes } = useStyles();
+  const [settingsModal, setSettingsModal] = useState(false);
 
   return (
     <div className="flex  flex-col p-4 bg-white shadow w-full">
-        <SchemaModal/>
+        <SchemaModal settingsModal={settingsModal} setSettingsModal={setSettingsModal} />
       <div className='flex justify-end'>
         <h5 className="flex-1 text-xl text-gray-600  font-bold dark:text-dark">
             Columns
@@ -21,7 +23,7 @@ function BuilderEditor() {
         
         <div className='flex items-center gap-2'>
         <Button className='center rounded-lg bg-blue-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20  hover:shadow-blue-500/40  '>Add Column</Button>
-        <ActionIcon size={'lg'} variant='light'><Icon icon="ep:setting" /></ActionIcon>
+        <ActionIcon size={'lg'} variant='light' onClick={() => setSettingsModal(true)}><Icon icon="ep:setting" /></ActionIcon>
         </div>
       </div>
 
