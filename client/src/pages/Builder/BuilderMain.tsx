@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react';
 import AddColumn from './AddColumn';
 import { useState } from 'react';
 import SchemaModal from './Schema';
+import { useAppSelector } from '../../store/storeHooks';
 
 const useStyles = createStyles(() => ({
   tableHeader: {
@@ -14,6 +15,10 @@ function BuilderMain() {
   const { classes } = useStyles();
   const [columnModal, setColumnModal] = useState(false);
   const [schemaModal, setSchemaModal] = useState(false);
+  const column = useAppSelector((state) => state.columns)[0]
+
+  console.log('columns ' + Object.keys(column))
+  
 
 
   return (

@@ -22,7 +22,8 @@ function Sidebar() {
           {tables.map(table =>
             <a
               href="#"
-              onClick={() => navigate(`/${table.name.replaceAll(' ', '-')}`)}
+              onClick={() =>
+                navigate(`/table/${table.name.replaceAll(' ', '-')}`)}
               className={`flex items-center gap-2 rounded-lg  px-4 py-2 text-gray-700 ${highlight(
                 '/'
               )}`}

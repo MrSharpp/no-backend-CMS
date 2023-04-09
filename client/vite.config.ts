@@ -5,11 +5,4 @@ import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      'src/*': path.resolve(__dirname, './src'),
-      'store/*': path.resolve(__dirname, './src/store'),
-      'components/*': path.resolve(__dirname, './src/components'),
-    },
-  },
 });

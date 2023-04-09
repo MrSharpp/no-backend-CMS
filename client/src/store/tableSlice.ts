@@ -1,13 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+interface ITable {
+  id: number;
+  name: string;
+}
+
 const tablesSlice = createSlice({
-  name: 'global',
-  initialState: [{ name: 'Mailing List' }] as {
-    name: string;
-  }[],
+  name: 'table',
+  initialState: [{ name: 'Mailing List', id: 0 }] as ITable[],
   reducers: {
     addTable(state, action) {
-      state.push({ name: action.payload });
+      state.push({ name: action.payload, id: 0 });
     },
     removeTable(state, action) {
       state = state.filter((item) => item.name != action.payload);
