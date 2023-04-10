@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface Column {
+interface IColumn {
   tableId: number;
   name: string;
   endpoint: string;
@@ -16,7 +16,7 @@ const columnSlice = createSlice({
       endpoint: 'https://www.google.com',
       path: '$.name',
     },
-  ] as Column[],
+  ] as IColumn[],
   reducers: {},
 });
 
