@@ -4,7 +4,7 @@ import { trpc } from '../util/trpc';
 
 function Table() {
   const { view } = useParams();
-  const {data}  = trpc.greeting.useQuery()
+  const {data}  = trpc.table.getTables.useQuery()
 
 console.log(data)
 
