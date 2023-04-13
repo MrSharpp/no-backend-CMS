@@ -23,6 +23,7 @@ specifiers:
   add: ^2.0.6
   autoprefixer: ^10.4.14
   jsonpath: ^1.1.1
+  mantine-datatable: ^2.4.1
   pnpm: ^8.1.1
   postcss: ^8.4.21
   react: ^18.2.0
@@ -58,6 +59,7 @@ dependencies:
   add: 2.0.6
   autoprefixer: 10.4.14_postcss@8.4.21
   jsonpath: 1.1.1
+  mantine-datatable: 2.4.1_bapwwllfag6xhsv7evuldykr5u
   pnpm: 8.1.1
   postcss: 8.4.21
   react: 18.2.0
@@ -1829,6 +1831,18 @@ packages:
     hasBin: true
     dependencies:
       js-tokens: 4.0.0
+    dev: false
+
+  /mantine-datatable/2.4.1_bapwwllfag6xhsv7evuldykr5u:
+    resolution: {integrity: sha512-0AyL0EvEfV7Il3YlAJZalyvb25nGtEAHhsuDHfLJLydEaMXeE+pf6bENq90ifd1IlXwvAfk8AbZO0na6u28PZQ==}
+    peerDependencies:
+      '@mantine/core': ^6.0.7
+      '@mantine/hooks': ^6.0.7
+      react: ^18.2.0
+    dependencies:
+      '@mantine/core': 6.0.6_z6mkljgfz35cqw5xrleq7kjcbq
+      '@mantine/hooks': 6.0.6_react@18.2.0
+      react: 18.2.0
     dev: false
 
   /merge2/1.4.1:
