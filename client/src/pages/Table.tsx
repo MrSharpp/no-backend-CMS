@@ -1,8 +1,13 @@
 import { useParams } from 'react-router-dom';
 import Box from '../components/Box';
+import { trpc } from '../util/trpc';
 
 function Table() {
   const { view } = useParams();
+  const {data}  = trpc.greeting.useQuery()
+
+console.log(data)
+
 
   return (
     <section className="bg-gray-50 white:bg-gray-900 p-3 sm:p-5 h-full">
@@ -14,7 +19,7 @@ function Table() {
                 {view?.replaceAll('-', ' ')}
               </h5>
               <p className="text-sm font-medium text-gray-600 dark:text-dark pb-4">
-                api/newsletters
+             
               </p>
               <div className="flex items-center">
                 <label htmlFor="simple-search" className="sr-only">
