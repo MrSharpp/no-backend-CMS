@@ -16,17 +16,25 @@ function BuilderMain({selectedView}: {selectedView: number}) {
   const { classes } = useStyles();
   const [columnModal, setColumnModal] = useState(false);
   const [schemaModal, setSchemaModal] = useState(false);
+  const [apiResponse, setApiResponse] = useState<object[]>([]);
+
   const {data} = trpc.table.viewTable.useQuery(selectedView)
 
 
   return (
     <div className="flex  flex-col p-4 bg-white shadow w-full">
-        <AddColumn settingsModal={columnModal} setSettingsModal={setColumnModal} jsonData={{
-    name: 'A Name',
-    point: 234,
-    dueDate: Date.now(),
-  }} />
-        <SchemaModal schemaModal={schemaModal} setSchemaModal={setSchemaModal}  /> 
+        <AddColumn 
+          settingsModal={columnModal} 
+          setSettingsModal={setColumnModal} 
+          jsonData={apiResponse} 
+          selectedTable={selectedView} 
+        />
+        <SchemaModal 
+          schemaModal={schemaModal} 
+          setSchemaModal={setSchemaModal} 
+          selectedTable={selectedView} 
+          setApiResponse={setApiResponse}  
+        /> 
       <div className='flex justify-end'>
         <h5 className="flex-1 text-xl text-gray-600  font-bold dark:text-dark">
           {data?.name}

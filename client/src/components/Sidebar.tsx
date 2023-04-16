@@ -24,7 +24,7 @@ function Sidebar() {
             <a
               href="#"
               onClick={() =>
-                navigate(`/table/${table.tableName.replaceAll(' ', '-')}`)}
+                navigate(`/table/${table.name.replaceAll(' ', '-')}`)}
               className={`flex items-center gap-2 rounded-lg  px-4 py-2 text-gray-700 ${highlight(
                 '/'
               )}`}
@@ -32,7 +32,7 @@ function Sidebar() {
               <Icon icon={'material-symbols:table-chart'} />
 
               <span className="text-sm font-medium">
-                {' '}{table.tableName}{' '}
+                {' '}{table.name}{' '}
               </span>
             </a>
           )}

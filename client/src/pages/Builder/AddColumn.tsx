@@ -13,27 +13,44 @@ import JSONPretty from 'react-json-pretty';
 
 import 'react-json-pretty/themes/monikai.css';
 import { useEffect, useState } from 'react';
+import { trpc } from '../../util/trpc';
+
+interface IForm {
+  name: string;
+  selector: string;
+}
 
 function AddColumn({
   settingsModal,
   setSettingsModal,
   jsonData,
+  selectedTable,
 }: {
-  jsonData: object;
+  selectedTable: number;
+  jsonData: Array<object>;
   settingsModal: boolean;
   setSettingsModal: (data: boolean) => void;
 }) {
   const [jpath, setjPath] = useState<string | string[]>('');
-  const form = useForm({});
+  const form = useForm<IForm>({});
+
+  const { data } = trpc.table.viewTable.useQuery(selectedTable);
+  const updateTableMutation = trpc.table.updateTable.useMutation()
 
   useEffect(() => setjPath(''), [settingsModal]);
 
   const evaluatePath = (jpathString: string) => {
     try {
-      setjPath(jp.query(jsonData, jpathString)[0]);
+      setjPath(jp.query(jsonData[0], jpathString)[0]);
     } catch (err) {
       setjPath('Invalid Json Path');
     }
+  };
+
+  const addColumn = (values: IForm) => {
+    const columns = JSON.parse(data?.columns || '[]');
+    columns.push({values})
+    updateTableMutation.mutate({id: selectedTable, data: { columns: JSON.stringify(columns) }})
   };
 
   return (
@@ -44,20 +61,25 @@ function AddColumn({
       size={'lg'}
     >
       <Box mx={'sm'} mt={'sm'}>
-        <form onSubmit={form.onSubmit(values => console.log(values))}>
+        <form onSubmit={form.onSubmit(addColumn)}>
           <Stack>
             <TextInput
               withAsterisk
               label="Column Name"
-              {...form.getInputProps('columnName')}
+              {...form.getInputProps('name')}
             />
 
-            <JSONPretty id="json-pretty" data={jsonData} />
+            <JSONPretty
+              id="json-pretty"
+              data={jsonData[0]}
+              mainStyle="max-height:400px;"
+            />
 
             <TextInput
               label="JSON Path"
               defaultValue={'$'}
               description="use $ to access root and . to acces its children. eg: $.name"
+              {...form.getInputProps('selector')}
               onChange={e => evaluatePath(e.target.value)}
             />
 

@@ -15,13 +15,18 @@ import { Icon } from '@iconify/react';
 
 import 'react-json-pretty/themes/monikai.css';
 import { useEffect, useState } from 'react';
+import { trpc } from '../../util/trpc';
 
 function SchemaModal({
-  schemaModal: schemaModal,
-  setSchemaModal: setSchemaModal,
+  schemaModal,
+  setSchemaModal,
+  selectedTable,
+  setApiResponse,
 }: {
+  selectedTable: number;
   schemaModal: boolean;
   setSchemaModal: (data: boolean) => void;
+  setApiResponse: (data: object[]) => void;
 }) {
   const todoSingle = {
     name: 'A Name',
@@ -31,10 +36,19 @@ function SchemaModal({
   const [json, setJson] = useState(JSON.stringify(todoSingle));
   const [resp, setResp] = useState('undefined');
 
-  const form = useForm({});
+  const tableUpdateMutation = trpc.table.updateTable.useMutation();
+
+  const form = useForm<{
+    url: string;
+    selector: string;
+  }>({});
 
   const sendRequest = () =>
-    fetch(form.values.url as URL).then(async res => setJson(await res.json()));
+    fetch((form.values.url as unknown) as URL).then(async res => {
+      const obj = await res.json();
+      setJson(obj);
+      setApiResponse(obj);
+    });
 
   const evaluatePath = (jpathString: string) => {
     try {
@@ -45,6 +59,16 @@ function SchemaModal({
     }
   };
 
+  const saveSchema = (endPoint: string, selector: string) => {
+    tableUpdateMutation.mutate({
+      id: selectedTable,
+      data: {
+        api: endPoint,
+        selector,
+      },
+    });
+  };
+
   return (
     <Modal
       opened={schemaModal}
@@ -53,7 +77,11 @@ function SchemaModal({
       size={'lg'}
     >
       <Box mx={'sm'} mt={'sm'}>
-        <form onSubmit={form.onSubmit(values => {})}>
+        <form
+          onSubmit={form.onSubmit(values =>
+            saveSchema(values.url, values.selector)
+          )}
+        >
           <Stack>
             <TextInput
               withAsterisk
@@ -77,6 +105,7 @@ function SchemaModal({
               label="JSON Selector"
               defaultValue={'$'}
               description="use $ to access root and . to acces its children. eg: $.name"
+              {...form.getInputProps('selector')}
               onChange={e => evaluatePath(e.target.value)}
             />
 

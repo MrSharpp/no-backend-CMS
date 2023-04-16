@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 const addTableSchema = z.object({
   name: z.string(),
-  columns: z.string().optional(),
+  columns: z.string().default('[]'),
   api: z.string().optional(),
   selector: z.string().optional(),
 });
@@ -25,4 +25,14 @@ export const TableRouter = router({
       },
     });
   }),
+  updateTable: publicProcedure
+    .input(z.object({ id: z.number(), data: addTableSchema.partial() }))
+    .mutation(({ input }) => {
+      return prisma.table.update({
+        where: {
+          id: input.id,
+        },
+        data: input.data,
+      });
+    }),
 });
