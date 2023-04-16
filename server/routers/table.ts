@@ -16,4 +16,11 @@ export const TableRouter = router({
       data: input,
     });
   }),
+  viewTable: publicProcedure.input(z.number()).query(({ input }) => {
+    return prisma.table.findFirst({
+      where: {
+        id: input,
+      },
+    });
+  }),
 });

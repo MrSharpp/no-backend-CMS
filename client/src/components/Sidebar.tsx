@@ -2,11 +2,12 @@ import { Icon } from '@iconify/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useAppSelector } from '../store/storeHooks';
+import { trpc } from '../util/trpc';
 
 function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const tables = useAppSelector(state => state.tables);
+  const tables = trpc.table.getTables.useQuery()
 
   const highlight = (path: string) =>
     `${location.pathname === path && 'bg-gray-100'}`;
@@ -19,11 +20,11 @@ function Sidebar() {
         </span>
 
         <nav aria-label="Main Nav" className="mt-6 flex flex-col space-y-1">
-          {tables.map(table =>
+          {tables.data?.map(table =>
             <a
               href="#"
               onClick={() =>
-                navigate(`/table/${table.name.replaceAll(' ', '-')}`)}
+                navigate(`/table/${table.tableName.replaceAll(' ', '-')}`)}
               className={`flex items-center gap-2 rounded-lg  px-4 py-2 text-gray-700 ${highlight(
                 '/'
               )}`}
@@ -31,7 +32,7 @@ function Sidebar() {
               <Icon icon={'material-symbols:table-chart'} />
 
               <span className="text-sm font-medium">
-                {' '}{table.name}{' '}
+                {' '}{table.tableName}{' '}
               </span>
             </a>
           )}

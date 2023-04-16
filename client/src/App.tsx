@@ -2,12 +2,12 @@ import { Suspense, useState } from 'react';
 import './App.css';
 import Sidebar from './components/Sidebar';
 import Main from './components/Main';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Table from './pages/Table';
 import ViewBuilder from './pages/Builder/Builder';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, createEmotionCache } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { trpc } from './util/trpc';
@@ -29,7 +29,12 @@ function App() {
     <div className="flex">
       <BrowserRouter>
         <Suspense fallback={<div>Loading...</div>}>
-          <MantineProvider>
+          <MantineProvider
+            emotionCache={createEmotionCache({
+              key: 'mantine',
+              prepend: false,
+            })}
+          >
             <ModalsProvider>
               <Provider store={store}>
                 <trpc.Provider client={trpcClient} queryClient={queryClient}>

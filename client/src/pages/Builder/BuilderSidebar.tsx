@@ -4,18 +4,27 @@ import { Icon } from '@iconify/react';
 import { modals } from '@mantine/modals';
 import { addTable } from '../../store/tableSlice';
 import { useRef } from 'react';
+import { trpc } from '../../util/trpc';
+import { useNavigate } from 'react-router-dom';
 
-function BuilderSidebar() {
-  const tables = useAppSelector(state => state.tables);
+function BuilderSidebar({selectedView,setSelectedView}: {selectedView?: number; setSelectedView: (flag: number) => void}) {
   const tableNameRef = useRef<HTMLInputElement>(null);
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate()
+  
+  const getTablesQuery = trpc.table.getTables.useQuery();
+  const addTableMutation = trpc.table.addTable.useMutation({onSuccess: () => {
+    getTablesQuery.refetch()
+  }});
+
+  if(getTablesQuery.isLoading) return <>Loading...</>
 
   const openModal = () => modals.openConfirmModal({
     title: 'Add Table',
     children: <TextInput ref={tableNameRef} label="Table Name" size="sm" />,
     labels: { confirm: 'Add', cancel: 'Cancel' },
     onConfirm: () => {
-      dispatch(addTable(tableNameRef.current?.value));
+      addTableMutation.mutate({tableName: tableNameRef.current?.value as string, columns: '' })
+      
     },
   });
 
@@ -34,13 +43,14 @@ function BuilderSidebar() {
             </Flex>
 
             <ul className="mt-2 space-y-1">
-              {tables.map(table =>
+              {getTablesQuery.data?.map(table =>
                 <li>
                   <a
-                    href=""
+                    href="#"
+                    onClick={() => setSelectedView(table.id)}
                     className="block rounded-md bg-gray-100 px-4 py-2 text-xs font-medium text-gray-700"
                   >
-                    {table.name}
+                    {table.tableName}
                   </a>
                 </li>
               )}

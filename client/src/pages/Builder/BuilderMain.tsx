@@ -4,6 +4,7 @@ import AddColumn from './AddColumn';
 import { useState } from 'react';
 import SchemaModal from './Schema';
 import { useAppSelector } from '../../store/storeHooks';
+import { trpc } from '../../util/trpc';
 
 const useStyles = createStyles(() => ({
   tableHeader: {
@@ -11,14 +12,11 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-function BuilderMain() {
+function BuilderMain({selectedView}: {selectedView: number}) {
   const { classes } = useStyles();
   const [columnModal, setColumnModal] = useState(false);
   const [schemaModal, setSchemaModal] = useState(false);
-  const column = useAppSelector((state) => state.columns)[0]
-
-  console.log('columns ' + Object.keys(column))
-  
+  const {data} = trpc.table.viewTable.useQuery(selectedView)
 
 
   return (
@@ -27,7 +25,7 @@ function BuilderMain() {
         <SchemaModal schemaModal={schemaModal} setSchemaModal={setSchemaModal}  /> 
       <div className='flex justify-end'>
         <h5 className="flex-1 text-xl text-gray-600  font-bold dark:text-dark">
-            Define Table
+          {data?.tableName}
         </h5>
         
         <div className='flex items-center gap-2'>
