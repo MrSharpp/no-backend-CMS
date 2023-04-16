@@ -29,13 +29,11 @@ function AddColumn({
   useEffect(() => setjPath(''), [settingsModal]);
 
   const evaluatePath = (jpathString: string) => {
-    let resp: string[] | string = '';
     try {
-      resp = jp.query(jsonData, jpathString);
+      setjPath(jp.query(jsonData, jpathString)[0]);
     } catch (err) {
-      resp = 'Invalid Json Path';
+      setjPath('Invalid Json Path');
     }
-    setjPath(resp);
   };
 
   return (

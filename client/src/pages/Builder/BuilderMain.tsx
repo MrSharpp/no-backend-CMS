@@ -21,7 +21,11 @@ function BuilderMain({selectedView}: {selectedView: number}) {
 
   return (
     <div className="flex  flex-col p-4 bg-white shadow w-full">
-        <AddColumn settingsModal={columnModal} setSettingsModal={setColumnModal} jsonData={{hello: "world"}} />
+        <AddColumn settingsModal={columnModal} setSettingsModal={setColumnModal} jsonData={{
+    name: 'A Name',
+    point: 234,
+    dueDate: Date.now(),
+  }} />
         <SchemaModal schemaModal={schemaModal} setSchemaModal={setSchemaModal}  /> 
       <div className='flex justify-end'>
         <h5 className="flex-1 text-xl text-gray-600  font-bold dark:text-dark">
@@ -39,10 +43,7 @@ function BuilderMain({selectedView}: {selectedView: number}) {
           <thead>
             <tr>
               <th className='w-40'>
-                <Text className={classes.tableHeader}>Column</Text>
-              </th>
-              <th>
-                <Text className={classes.tableHeader}>API Endpoint</Text>
+                <Text className={classes.tableHeader}>Column Accessor</Text>
               </th>
 
               <th>
@@ -55,9 +56,8 @@ function BuilderMain({selectedView}: {selectedView: number}) {
             </tr>
           </thead>
           <tbody>
-            <tr>
+            {/* <tr>
               <td>Name</td>
-              <td>https://www.google.com</td>
               <td>$.name[0]</td>
 
               <td><Flex>
@@ -65,7 +65,7 @@ function BuilderMain({selectedView}: {selectedView: number}) {
               </Flex>
               </td>
 
-            </tr>
+            </tr> */}
           </tbody>
         </Table>
       </div>
