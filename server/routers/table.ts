@@ -3,8 +3,10 @@ import { prisma } from '../prismaClient';
 import { z } from 'zod';
 
 const addTableSchema = z.object({
-  tableName: z.string(),
-  columns: z.string(),
+  name: z.string(),
+  columns: z.string().optional(),
+  api: z.string().optional(),
+  selector: z.string().optional(),
 });
 
 export const TableRouter = router({

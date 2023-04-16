@@ -23,7 +23,7 @@ function BuilderSidebar({selectedView,setSelectedView}: {selectedView?: number; 
     children: <TextInput ref={tableNameRef} label="Table Name" size="sm" />,
     labels: { confirm: 'Add', cancel: 'Cancel' },
     onConfirm: () => {
-      addTableMutation.mutate({tableName: tableNameRef.current?.value as string, columns: '' })
+      addTableMutation.mutate({name: tableNameRef.current?.value as string })
       
     },
   });
@@ -50,7 +50,7 @@ function BuilderSidebar({selectedView,setSelectedView}: {selectedView?: number; 
                     onClick={() => setSelectedView(table.id)}
                     className="block rounded-md bg-gray-100 px-4 py-2 text-xs font-medium text-gray-700"
                   >
-                    {table.tableName}
+                    {table.name}
                   </a>
                 </li>
               )}

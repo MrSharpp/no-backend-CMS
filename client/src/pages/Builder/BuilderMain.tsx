@@ -29,7 +29,7 @@ function BuilderMain({selectedView}: {selectedView: number}) {
         <SchemaModal schemaModal={schemaModal} setSchemaModal={setSchemaModal}  /> 
       <div className='flex justify-end'>
         <h5 className="flex-1 text-xl text-gray-600  font-bold dark:text-dark">
-          {data?.tableName}
+          {data?.name}
         </h5>
         
         <div className='flex items-center gap-2'>
